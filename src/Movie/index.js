@@ -3,7 +3,7 @@ import {List, PullToRefresh, ListView, Button } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
 import axios from 'axios';
 import ReactPullToRefresh from 'react-pull-to-refresh';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import {render} from 'react-dom';
 import iScroll from 'iscroll/build/iscroll-probe';
 import ReactIScroll from 'reactjs-iscroll';
@@ -13,13 +13,34 @@ import {Link} from 'react-router-dom';
 
 const Item = List.Item;
 const Brief = Item.Brief;
+const img = {
+    float: 'left',
+    width: '27%',
+    height: '50px',
+    overflow: 'hidden',
+    position: 'relative',
+    marginRight: '0.2rem'
+}
+const wrapper = {
+    fontSize: '14px',
+    padding: '0.2rem 0',
+    borderBottom: '1px solid #e5e5e5',
+    whiteSpace: 'normal'
+}
+
+const font = {
+    width: '73%',
+    position: 'absolulte',
+    right: 0
+}
 
 export default class Movie extends Component {
     constructor(props){
         super(props);
         this.state = {
             movieList : [],
-            start: 0
+            start: 0,
+            loading: true
         }
     }
 
@@ -32,7 +53,7 @@ export default class Movie extends Component {
         // axios.get(url)
         .then(function (response) {
             console.log(response);
-            _this.setState({movieList: response.data.data})
+            _this.setState({movieList: response.data.data,   loading: false})
         })
         .catch(function (error) {
             console.log(error);
@@ -90,25 +111,30 @@ export default class Movie extends Component {
         let {movieList} = this.state;
         return (
             <Row>
+            {/* {
+                // this.state.loading && 
+                
+            } */}
           <Col span={24}>
-         
+          
             <ReactPullToRefresh onRefresh={this.handleRefresh.bind(this)} style={{textAlign: 'center'}}>
-                <List renderHeader={() => '电影'} className="my-list">
-                    {/* <Item arrow="horizontal" multipleLine onClick={() => {}}>
-                        Title <Brief>subtitle</Brief>
-                    </Item> */}
+                <List renderHeader={() => '电影'} style={wrapper} >
+
                     {   
                         movieList.map((item,index) => {
                             return(
                                 <Link to={{pathname: `details`, query : { id: item.postid }}} key={index}>
                                 <Item
                                     key={index}
-                                    // style={{height: 110}}
+                                    style={{height: 110, whiteSpace: 'normal'}}
                                     // onClick={this.click.bind(null,item)}
                                 >
-                                    
-                                    {/* <img style={{width: 141, height: 200}} src={item.images.small}></img> */}
-                                    <span>{item.source}</span>
+                                    <div style={{whiteSpace: 'normal'}}>
+                                    <img style={img} src={item.imgsrc}></img>
+                                    {/* <div style={font}> */}
+                                    {item.title}
+                                    {/* </div> */}
+                                    </div>
                                 </Item>
                                 </Link>
                             )

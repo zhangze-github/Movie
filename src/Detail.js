@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import {List, PullToRefresh, ListView, Button } from 'antd-mobile';
 
 axios.defaults.baseURL =    "https://api.isoyu.com";
 
@@ -23,13 +25,6 @@ export default class Detail extends Component{
             .then(function (response) {
                 console.log(response);
                 _this.setState({data: response.data.data})
-                // _this.setState({movieList: [...this.state.movieList, ...response.data.subjects]})
-
-                // let c = _this.state.movieList.push(...response.data.subjects);
-                // console.warn( c)
-                // _this.setState({
-                //     movieList: [..._this.state.movieList, ...response.data.subjects]
-                // })
             })
             .catch(function (error) {
                 console.log(error);
@@ -43,10 +38,15 @@ export default class Detail extends Component{
         if(data){
             if(data.title){
                 return(
-                <h1>
-                    {data.title}
-                    <img src={data.recImgsrc} style={{width: '100vw'}}></img>
-                </h1>
+                <div>
+                    <h1>
+                        {data.title}
+                        <img src={data.recImgsrc} style={{width: '100vw'}}></img>
+                    </h1>
+                    <Link to={'/'} >
+                        <Button>返回</Button>
+                    </Link>
+                </div>
                 )
             }else{
                 return( <div>无相关资源</div>)
