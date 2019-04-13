@@ -25,12 +25,14 @@ export default class Movie extends Component {
 
     componentDidMount(){
         const _this=this; 
+        axios.get('https://api.isoyu.com/index.php/api/News/new_list?type=2&page=0')
         // axios.get('https://api.isoyu.com/index.php/api//Movie/playing_movie_list?start=0&count=9')
-        let url = "https://bird.ioliu.cn/v1?url=" + 'https://api.douban.com/v2/movie/in_theaters?start=0&count=10'
-        axios.get(url)
+        // axios.get('https://bird.ioliu.cn/v1?url=https://api.douban.com/v2/movie/in_theaters?start=0&count=10')
+        // let url = "https://bird.ioliu.cn/v1?url=" + 'https://api.douban.com/v2/movie/in_theaters?start=0&count=10'
+        // axios.get(url)
         .then(function (response) {
             console.log(response);
-            _this.setState({movieList: response.data.subjects})
+            _this.setState({movieList: response.data.data})
         })
         .catch(function (error) {
             console.log(error);
@@ -40,12 +42,15 @@ export default class Movie extends Component {
     click = (item) => {
         console.warn(123);
         const _this=this; 
-        axios.get('https://api.isoyu.com/index.php/api//Movie/playing_movie_list?start=0&count=9')
+        this.setState({start: 0})
+        // axios.get('https://api.isoyu.com/index.php/api/News/new_list?type=1&page=20')
+        axios.get('https://api.isoyu.com/index.php/api/News/new_list?type=2&page=0')
+        // axios.get('https://api.douban.com/v2/movie/in_theaters?start=0&count=10')
         // let url = "https://bird.ioliu.cn/v1?url=" + 'https://api.douban.com/v2/movie/in_theaters?start=0&count=10'
         // axios.get(url)
         .then(function (response) {
             console.log(response);
-            _this.setState({movieList: [..._this.state.movieList, ...response.data.subjects]})
+            _this.setState({movieList: [...response.data.data]})
         })
         .catch(function (error) {
             console.log(error);
@@ -63,16 +68,17 @@ export default class Movie extends Component {
         })
         const _this = this;
         console.warn(start)
-        let url = `https://api.isoyu.com/index.php/api//Movie/playing_movie_list?start=${start}&count=10`
+        // let url = `https://api.douban.com/v2/movie/in_theaters?start=${start}&count=10`
+        let url = `https://api.isoyu.com/index.php/api/News/new_list?type=2&page=${start}`
         axios.get(url)
             .then(function (response) {
                 console.log(response);
                 // _this.setState({movieList: [...this.state.movieList, ...response.data.subjects]})
 
-                let c = _this.state.movieList.push(...response.data.subjects);
+                let c = _this.state.movieList.push(...response.data.data);
                 console.warn( c)
                 _this.setState({
-                    movieList: [..._this.state.movieList, ...response.data.subjects]
+                    movieList: [..._this.state.movieList, ...response.data.data]
                 })
             })
             .catch(function (error) {
@@ -94,15 +100,15 @@ export default class Movie extends Component {
                     {   
                         movieList.map((item,index) => {
                             return(
-                                <Link to={{pathname: `details`, query : { id: item.id }}} key={index}>
+                                <Link to={{pathname: `details`, query : { id: item.postid }}} key={index}>
                                 <Item
                                     key={index}
                                     // style={{height: 110}}
                                     // onClick={this.click.bind(null,item)}
                                 >
                                     
-                                    <img style={{width: 141, height: 200}} src={item.images.small}></img>
-                                    <span>{item.title}</span>
+                                    {/* <img style={{width: 141, height: 200}} src={item.images.small}></img> */}
+                                    <span>{item.source}</span>
                                 </Item>
                                 </Link>
                             )
