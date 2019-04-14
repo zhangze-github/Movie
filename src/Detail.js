@@ -31,10 +31,21 @@ export default class Detail extends Component{
             });
     }
 
+    click = () => {
+        window.location.href = '/'
+    }
     render(){
         console.warn( this.props.location.query.id);
         let {data} = this.state;
         console.warn(data);
+        if(data === null){
+            return (
+                <div>
+                    <h3>无相关资源</h3>
+                    <Button onClick={this.click.bind(null)}>返回</Button>
+                </div>
+            )
+        }
         if(data){
             if(data.title){
                 return(
@@ -43,9 +54,9 @@ export default class Detail extends Component{
                         {data.title}
                         <img src={data.recImgsrc} style={{width: '100vw'}}></img>
                     </h1>
-                    <Link to={'/'} >
-                        <Button>返回</Button>
-                    </Link>
+                    {/* <Link to={'/'} > */}
+                        <Button onClick={this.click.bind(null)}>返回</Button>
+                    {/* </Link> */}
                 </div>
                 )
             }else{

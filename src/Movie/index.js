@@ -40,7 +40,8 @@ export default class Movie extends Component {
         this.state = {
             movieList : [],
             start: 0,
-            loading: true
+            loading: false,
+            startLoading: true
         }
     }
 
@@ -53,7 +54,7 @@ export default class Movie extends Component {
         // axios.get(url)
         .then(function (response) {
             console.log(response);
-            _this.setState({movieList: response.data.data,   loading: false})
+            _this.setState({movieList: response.data.data,   startLoading: false})
         })
         .catch(function (error) {
             console.log(error);
@@ -61,31 +62,48 @@ export default class Movie extends Component {
     }
     
     click = (item) => {
-        console.warn(123);
-        const _this=this; 
-        this.setState({start: 0})
-        // axios.get('https://api.isoyu.com/index.php/api/News/new_list?type=1&page=20')
-        axios.get('https://api.isoyu.com/index.php/api/News/new_list?type=2&page=0')
-        // axios.get('https://api.douban.com/v2/movie/in_theaters?start=0&count=10')
-        // let url = "https://bird.ioliu.cn/v1?url=" + 'https://api.douban.com/v2/movie/in_theaters?start=0&count=10'
-        // axios.get(url)
-        .then(function (response) {
-            console.log(response);
-            _this.setState({movieList: [...response.data.data]})
+        this.setState({
+            start: 0
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+        const _this = this;
+        // let url = `https://api.douban.com/v2/movie/in_theaters?start=${start}&count=10`
+        let url = `https://api.isoyu.com/index.php/api/News/new_list?type=2&page=0`
+        axios.get(url)
+            .then(function (response) {
+                console.log(response);
+                _this.setState({
+                    movieList: [...response.data.data],
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     handleRefresh = () => {
-        console.warn('test');
+        this.setState({
+            start: 0
+        })
+        const _this = this;
+        // let url = `https://api.douban.com/v2/movie/in_theaters?start=${start}&count=10`
+        let url = `https://api.isoyu.com/index.php/api/News/new_list?type=2&page=0`
+        axios.get(url)
+            .then(function (response) {
+                console.log(response);
+                _this.setState({
+                    movieList: [...response.data.data],
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     loaderMore = () => {
         let start = this.state.start + 10;
         this.setState({
-            start
+            start,
+            loading: true
         })
         const _this = this;
         console.warn(start)
@@ -99,7 +117,8 @@ export default class Movie extends Component {
                 let c = _this.state.movieList.push(...response.data.data);
                 console.warn( c)
                 _this.setState({
-                    movieList: [..._this.state.movieList, ...response.data.data]
+                    movieList: [..._this.state.movieList, ...response.data.data],
+                    loading: false
                 })
             })
             .catch(function (error) {
@@ -109,17 +128,17 @@ export default class Movie extends Component {
     render() {
         console.warn(this.state.movieList);
         let {movieList} = this.state;
+        if(this.state.startLoading){
+            return(
+                <h1 style={{textAlign: 'center', position: 'fixed', top: '45vh', left: '20vw'}}>loading...</h1>
+                // <img style={{width: '50vw'}} src='http://cdn.mockplus.cn/image/2018/03/62f3d715-49a1-4b69-a549-ff17c6d732d0.gif'></img>
+            )
+        }
         return (
             <Row>
-            {/* {
-                // this.state.loading && 
-                
-            } */}
           <Col span={24}>
-          
             <ReactPullToRefresh onRefresh={this.handleRefresh.bind(this)} style={{textAlign: 'center'}}>
-                <List renderHeader={() => '电影'} style={wrapper} >
-
+                <List renderHeader={() => '娱乐新闻'} style={wrapper} >
                     {   
                         movieList.map((item,index) => {
                             return(
@@ -140,7 +159,13 @@ export default class Movie extends Component {
                             )
                         })
                     }
-                    <Button onClick={this.loaderMore.bind(null)}>点击加载更多</Button>
+                    <Button loading={this.state.loading} onClick={this.loaderMore.bind(null)}>
+                        {
+                            this.state.loading ? 
+                            "加载中" :
+                            "点击加载更多"
+                        }
+                    </Button>
                 </List>
             </ReactPullToRefresh>
             {/* </ReactIScroll> */}
