@@ -23,7 +23,6 @@ export default class Detail extends Component{
     }
 
     click = () => {
-        // window.location.href = '/'
         window.history.back();
     }
     
@@ -56,7 +55,5 @@ export default class Detail extends Component{
         }else{
             return (<h1 style={{textAlign: 'center', position: 'fixed', top: '45vh', left: '20vw'}}>loading...</h1>)
         }
-
-
     }
 }
