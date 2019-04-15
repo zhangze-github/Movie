@@ -29,7 +29,7 @@ const font = {
     right: 0
 }
 
-export default class Movie extends Component {
+export default class Test extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -122,6 +122,7 @@ export default class Movie extends Component {
                     {   
                         movieList.map((item,index) => {
                             return(
+                                
                                 <Link to={{pathname: `details`, query : { id: item.postid }}} key={index}>
                                 <Item
                                     key={index}

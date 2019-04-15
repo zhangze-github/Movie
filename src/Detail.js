@@ -13,10 +13,8 @@ export default class Detail extends Component{
     }
     componentWillMount(){
         const _this = this;
-        let url = `https//api.isoyu.com/index.php/api/News/new_detail?postid=${this.props.location.query.id}`
         axios.get("/index.php/api/News/new_detail?postid=" + this.props.location.query.id)
             .then(function (response) {
-                console.log(response);
                 _this.setState({data: response.data.data})
             })
             .catch(function (error) {
@@ -27,6 +25,7 @@ export default class Detail extends Component{
     click = () => {
         window.location.href = '/'
     }
+    
     render(){
         let {data} = this.state;
         if(data === null){

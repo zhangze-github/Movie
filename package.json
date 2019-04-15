@@ -11,11 +11,13 @@
     "react-dom": "^16.8.6",
     "react-pull-to-refresh": "^1.1.2",
     "react-pullload": "^1.2.0",
+    "react-redux": "^7.0.2",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-touch-loader": "^1.1.4",
-    "reactjs-iscroll": "^0.3.2"
+    "reactjs-iscroll": "^0.3.2",
+    "redux": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

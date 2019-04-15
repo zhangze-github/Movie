@@ -7,25 +7,23 @@ import Movie from './Movie/index';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Detail from './Detail.js';
 
+import { browserHistory  } from 'react-router'
+
 
 export default class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-
+            disClick: []
         }
     }
-    
 
     render() {
         return (
-                    // <Movie></Movie>
-        // <Router history={hashHistory}>
         <Router >
             <Route path="/" component={ Movie } exact></Route>
             <Route path="/details" component={ Detail }></Route>
         </Router>
-
         );
     }
 }
