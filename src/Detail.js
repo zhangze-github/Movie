@@ -23,7 +23,8 @@ export default class Detail extends Component{
     }
 
     click = () => {
-        window.location.href = '/'
+        // window.location.href = '/'
+        window.history.back();
     }
     
     render(){

@@ -16,23 +16,28 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import 'antd-mobile/dist/antd-mobile.css';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider, connect} from "react-redux";
+import {deepClone} from 'lodash';
+import thunk from 'redux-thunk'
 
-function counter(state = { count: 0 }, action) {
+function counter(state = { count: [] }, action) {
     const count = state.count;
+    console.warn("update")
     switch (action.type) {
         case 'add':
-            return { count: count.push(action.payload)}
+            console.warn(action);
+            return { count: [...action.payload]}
         case "less": 
-            let index = action.payload.indexOf(count);
-            count = count.splice(index, 1)
-            return{ count }
+            // let index = action.payload.indexOf(count);
+            // count = count.splice(index, 1)
+            let data = count.filter(item => item !== action.payload)
+            return{ count: data }
         default:
             return state
     }
 }
-const store = createStore(counter);
+const store = createStore(counter,applyMiddleware(thunk));
 
 ReactDOM.render(
     <Provider store={store}>  

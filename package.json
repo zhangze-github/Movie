@@ -9,6 +9,7 @@
     "lodash": "^4.17.11",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-infinite-scroller": "^1.2.4",
     "react-pull-to-refresh": "^1.1.2",
     "react-pullload": "^1.2.0",
     "react-redux": "^7.0.2",
@@ -17,7 +18,8 @@
     "react-scripts": "2.1.8",
     "react-touch-loader": "^1.1.4",
     "reactjs-iscroll": "^0.3.2",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
