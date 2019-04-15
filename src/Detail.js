@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios';
-import {Link} from 'react-router-dom';
-import {List, PullToRefresh, ListView, Button } from 'antd-mobile';
+import {Button } from 'antd-mobile';
 
 axios.defaults.baseURL =    "https://api.isoyu.com";
 
@@ -13,13 +12,7 @@ export default class Detail extends Component{
         }
     }
     componentWillMount(){
-        // let start = this.state.start + 10;
-        // this.setState({
-        //     start
-        // })
         const _this = this;
-        // console.warn(start)
-        // let url ="https://bird.ioliu.cn/v1?url=" +  `https://api.isoyu.com/index.php/api/api/Movie/movie_info?id=${this.props.location.query.id}`
         let url = `https//api.isoyu.com/index.php/api/News/new_detail?postid=${this.props.location.query.id}`
         axios.get("/index.php/api/News/new_detail?postid=" + this.props.location.query.id)
             .then(function (response) {
@@ -35,13 +28,11 @@ export default class Detail extends Component{
         window.location.href = '/'
     }
     render(){
-        console.warn( this.props.location.query.id);
         let {data} = this.state;
-        console.warn(data);
         if(data === null){
             return (
                 <div>
-                    <h3>无相关资源</h3>
+                    <h1 >无相关资源</h1>
                     <Button onClick={this.click.bind(null)}>返回</Button>
                 </div>
             )
@@ -53,17 +44,17 @@ export default class Detail extends Component{
                     <h1>
                         {data.title}
                         <img src={data.recImgsrc} style={{width: '100vw'}}></img>
+                        <div>{data.category}</div>
+                        <div>{data.dkeys}</div>
                     </h1>
-                    {/* <Link to={'/'} > */}
                         <Button onClick={this.click.bind(null)}>返回</Button>
-                    {/* </Link> */}
                 </div>
                 )
             }else{
                 return( <div>无相关资源</div>)
             }
         }else{
-            return (<div>加载中</div>)
+            return (<h1 style={{textAlign: 'center', position: 'fixed', top: '45vh', left: '20vw'}}>loading...</h1>)
         }
 
 
