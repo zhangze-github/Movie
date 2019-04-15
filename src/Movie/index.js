@@ -6,6 +6,7 @@ import ReactPullToRefresh from 'react-pull-to-refresh';
 import { Row, Col } from 'antd';
 import {Link} from 'react-router-dom';
 import "react-pullload/dist/ReactPullLoad.css";
+import {connect} from "react-redux";
 
 const Item = List.Item;
 const img = {
@@ -28,6 +29,20 @@ const font = {
     position: 'absolulte',
     right: 0
 }
+
+
+// function mapStateToProps(state) {
+//     return {
+//         value: state.count
+//     }
+// }
+
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         onAdd: () => dispatch({ type: 'add' }),
+//         onLess: () => dispatch({ type: 'less' }),
+//     }
+// }
 
 export default class Movie extends Component {
     constructor(props){
@@ -152,3 +167,10 @@ export default class Movie extends Component {
     }
 }
 
+// const Movie = connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+// )(App)
+
+
+// export default Movie;
